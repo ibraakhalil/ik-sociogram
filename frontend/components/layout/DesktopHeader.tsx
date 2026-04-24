@@ -41,7 +41,7 @@ export default function DesktopHeader() {
         className="mx-auto flex max-w-360 items-center justify-between gap-5 px-6 xl:px-8"
         style={{ minHeight: "var(--header-height)" }}
       >
-        <Link href="/" className="shrink-0" aria-label="Buddy Script home">
+        <Link href="/" className="shrink-0" aria-label="IK Sociogram home">
           <h1 className="text-2xl font-bold text-[#1890ff]">
             IK <span className="font-normal">Sociogram</span>
           </h1>

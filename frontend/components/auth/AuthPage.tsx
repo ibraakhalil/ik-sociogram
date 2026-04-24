@@ -221,7 +221,7 @@ export default function AuthPage({ mode }: AuthPageProps) {
             <div className="mb-10 text-center">
               <h2 className="text-ink text-[28px] leading-tight font-semibold">{content.title}</h2>
               <p className="text-muted mt-2 text-sm">
-                Join Buddy Script and connect with your friends
+                Join IK Sociogram and connect with your friends
               </p>
             </div>
 

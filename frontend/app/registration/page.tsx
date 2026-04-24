@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import AuthPage from "@/components/auth/AuthPage";
 
 export const metadata: Metadata = {
-  title: "Registration | Buddy Script",
+  title: "Registration | IK Sociogram",
 };
 
 export default function RegistrationPage() {

@@ -15,8 +15,8 @@ const hindSiliguri = Hind_Siliguri({
 });
 
 export const metadata: Metadata = {
-  title: "Buddy Script",
-  description: "Buddy Script Social Feed",
+  title: "IK Sociogram",
+  description: "IK Sociogram Social Feed",
 };
 
 export default function RootLayout({
