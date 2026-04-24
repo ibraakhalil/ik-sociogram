@@ -1,5 +1,5 @@
 {
-  "name": "appifylab-social-backend",
+  "name": "ik-sociogram-backend",
   "module": "src/index.ts",
   "type": "module",
   "private": true,

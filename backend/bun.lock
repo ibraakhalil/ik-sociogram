@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "appifylab-social-backend",
+      "name": "ik-sociogram-backend",
       "dependencies": {
         "@hono/zod-validator": "^0.7.6",
         "drizzle-orm": "^0.45.2",

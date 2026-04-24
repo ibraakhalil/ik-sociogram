@@ -13,7 +13,7 @@ const envSchema = z
     CORS_ORIGINS: z
       .string()
       .trim()
-      .default("https://appifylab-social.work.gd,http://localhost:3000")
+      .default("https://ik-sociogram.work.gd,http://localhost:3000")
       .transform(splitCommaSeparatedValues)
       .pipe(z.array(z.string().url()).min(1, "CORS_ORIGINS must contain at least one origin.")),
     DATABASE_URL: z.string().trim().min(1).default("./data/database.db"),

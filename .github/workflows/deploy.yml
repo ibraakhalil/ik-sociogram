@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: appifylab-social-production
+  group: ik-sociogram-production
   cancel-in-progress: true
 
 jobs:
@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      APP_DIR: /home/ubuntu/appifylab-social
+      APP_DIR: /home/ubuntu/ik-sociogram
       SERVER_HOST: ${{ secrets.SERVER_HOST }}
       SERVER_USER: ${{ secrets.SERVER_USER }}
-      NEXT_PUBLIC_API_BASE_URL: "https://appifylab-social.work.gd/api/v1"
+      NEXT_PUBLIC_API_BASE_URL: "https://ik-sociogram.work.gd/api/v1"
 
     steps:
       - name: Checkout repository
