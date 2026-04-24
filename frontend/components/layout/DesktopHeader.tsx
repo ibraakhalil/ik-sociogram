@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Bell, ChevronDown, Home, LogOut, Search, UserRound } from "lucide-react";
@@ -39,24 +38,19 @@ export default function DesktopHeader() {
       style={{ height: "var(--header-height)" }}
     >
       <div
-        className="mx-auto flex max-w-[1440px] items-center justify-between gap-5 px-6 xl:px-8"
+        className="mx-auto flex max-w-360 items-center justify-between gap-5 px-6 xl:px-8"
         style={{ minHeight: "var(--header-height)" }}
       >
         <Link href="/" className="shrink-0" aria-label="Buddy Script home">
-          <Image
-            src="/svgs/logo.svg"
-            alt="Buddy Script"
-            width={144}
-            height={36}
-            className="h-9 w-auto"
-            priority
-          />
+          <h1 className="text-2xl font-bold text-[#1890ff]">
+            IK <span className="font-normal">Sociogram</span>
+          </h1>
         </Link>
 
         <form className="relative hidden max-w-md flex-1 lg:block">
-          <Search className="text-subtle pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
+          <Search className="text-subtle pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2" />
           <input
-            className="bg-surface-muted text-ink focus:border-accent/50 h-11 w-full rounded-full border border-transparent pl-11 pr-4 text-sm outline-none transition focus:bg-surface"
+            className="bg-surface-muted text-ink focus:border-accent/50 focus:bg-surface h-11 w-full rounded-full border border-transparent pr-4 pl-11 text-sm transition outline-none"
             type="search"
             placeholder="Search people, groups, and posts"
             aria-label="Search"
@@ -71,7 +65,7 @@ export default function DesktopHeader() {
               aria-label="Notifications"
             >
               <Bell className="h-5 w-5" />
-              <span className="bg-accent text-contrast absolute right-2 top-2 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-semibold">
+              <span className="bg-accent text-contrast absolute top-2 right-2 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-semibold">
                 6
               </span>
             </button>
@@ -89,14 +83,14 @@ export default function DesktopHeader() {
                     name={`${user.firstName} ${user.lastName}`}
                     className="h-11 w-11 text-sm"
                   />
-                  <span className="border-line bg-surface text-subtle absolute bottom-0 right-0 flex h-4 w-4 items-center justify-center rounded-full border shadow-sm">
+                  <span className="border-line bg-surface text-subtle absolute right-0 bottom-0 flex h-4 w-4 items-center justify-center rounded-full border shadow-sm">
                     <ChevronDown className="h-3 w-3" />
                   </span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-64 p-2">
                 <DropdownMenuLabel className="px-3 py-3">
-                  <div className="flex items-center gap-3 normal-case tracking-normal">
+                  <div className="flex items-center gap-3 tracking-normal normal-case">
                     <Avatar
                       name={`${user.firstName} ${user.lastName}`}
                       className="h-10 w-10 text-sm"

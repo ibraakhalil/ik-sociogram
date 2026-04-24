@@ -35,7 +35,7 @@ app.use(
 
 app.get("/", (c) =>
   c.json({
-    message: "AppifyLab Social API is running.",
+    message: "IK Sociogram API is running.",
     version: "v1",
     basePath: "/api/v1",
   }),

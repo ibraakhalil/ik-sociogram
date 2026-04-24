@@ -1,4 +1,4 @@
-# AppifyLab Social Backend
+# IK Sociogram Backend
 
 Simple social feed API built with Bun, Hono, Drizzle ORM, and SQLite.
 
