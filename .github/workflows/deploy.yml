@@ -1,0 +1,93 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: appifylab-social-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      APP_DIR: /home/ubuntu/appifylab-social
+      SERVER_HOST: ${{ secrets.SERVER_HOST }}
+      SERVER_USER: ${{ secrets.SERVER_USER }}
+      NEXT_PUBLIC_API_BASE_URL: "https://appifylab-social.work.gd/api/v1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Configure SSH
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          test -n "$SERVER_HOST" || { echo "SERVER_HOST secret is required."; exit 1; }
+          test -n "$SERVER_USER" || { echo "SERVER_USER secret is required."; exit 1; }
+          test -n "${{ secrets.SERVER_SSH_KEY }}" || { echo "SERVER_SSH_KEY secret is required."; exit 1; }
+          test -n "${{ secrets.BACKEND_ENV_FILE }}" || { echo "BACKEND_ENV_FILE secret is required."; exit 1; }
+          test -n "$NEXT_PUBLIC_API_BASE_URL" || { echo "NEXT_PUBLIC_API_BASE_URL workflow env value is required."; exit 1; }
+
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Ensure application directory exists
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          ssh -i ~/.ssh/id_rsa \
+            -o StrictHostKeyChecking=accept-new \
+            "$SERVER_USER@$SERVER_HOST" \
+            "mkdir -p '$APP_DIR'"
+
+      - name: Sync repository to server
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          tar \
+            --exclude='backend/public/posts' \
+            --exclude='backend/node_modules' \
+            --exclude='frontend/node_modules' \
+            --exclude='frontend/.next' \
+            -czf - \
+            backend \
+            frontend \
+            ecosystem.config.cjs \
+            .github/workflows/deploy.sh | ssh -i ~/.ssh/id_rsa \
+            -o StrictHostKeyChecking=accept-new \
+            "$SERVER_USER@$SERVER_HOST" \
+            "tar -xzf - -C '$APP_DIR'"
+
+      - name: Upload environment files
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          ssh -i ~/.ssh/id_rsa \
+            -o StrictHostKeyChecking=accept-new \
+            "$SERVER_USER@$SERVER_HOST" \
+            "mkdir -p '$APP_DIR/backend'"
+
+          printf '%s\n' "${{ secrets.BACKEND_ENV_FILE }}" | ssh -i ~/.ssh/id_rsa \
+            -o StrictHostKeyChecking=accept-new \
+            "$SERVER_USER@$SERVER_HOST" \
+            "umask 077 && cat > '$APP_DIR/backend/.env'"
+
+      - name: Run deployment script
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          api_base_url_escaped=$(printf '%q' "$NEXT_PUBLIC_API_BASE_URL")
+
+          ssh -i ~/.ssh/id_rsa \
+            -o StrictHostKeyChecking=accept-new \
+            "$SERVER_USER@$SERVER_HOST" \
+            "export NEXT_PUBLIC_API_BASE_URL=$api_base_url_escaped && cd '$APP_DIR' && chmod +x .github/workflows/deploy.sh && ./.github/workflows/deploy.sh"

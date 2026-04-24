@@ -1,0 +1,9 @@
+import { migrate } from "drizzle-orm/bun-sqlite/migrator";
+
+import { db } from "@/db/client";
+
+await migrate(db, {
+  migrationsFolder: "./drizzle",
+});
+
+console.log("Migrations applied.");

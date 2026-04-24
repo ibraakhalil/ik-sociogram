@@ -1,0 +1,72 @@
+PROJECT SPECIFICATION: SOCIAL FEED SYSTEM
+==========================================
+
+1. OVERVIEW
+-----------
+A simplified social media platform focusing on a centralized feed where users can share text and image-based content, interact via likes and nested comments, and manage content privacy.
+
+2. AUTHENTICATION & AUTHORIZATION
+---------------------------------
+* Registration:
+    - Required fields: First Name, Last Name, Email, Password.
+    - Password must be hashed (e.g., BCrypt) before storage.
+* Login:
+    - Identity-based access (Email/Password).
+    - Session Management: JWT-based or Session-based (JWT recommended for scalability).
+* Authorization:
+    - Protected Routes: The Feed Page and all API interaction endpoints.
+    - Ownership: Users can only edit/delete their own content.
+* Exclusions: No "Forgot Password" or "Email Verification" required for this version.
+
+3. FEED PAGE FUNCTIONALITY
+--------------------------
+* Accessibility: Only authenticated users can access the feed.
+* Visibility Logic:
+    - Public Posts: Visible to all registered users.
+    - Private Posts: Visible only to the author.
+* Sorting:
+    - Chronological order: Newest posts must appear at the top.
+* Post Composition:
+    - Support for text-only, image-only, or combined text/image posts.
+* Interaction System:
+    - Likes: Toggle (Like/Unlike) state for posts, comments, and replies.
+    - Liker List: Capability to view a list of users who liked a specific item.
+* Commenting Engine:
+    - Support for top-level comments on posts.
+    - Support for nested replies on comments.
+    - Likes/Unlikes supported at every nesting level.
+
+4. SYSTEM DESIGN & SCALABILITY
+------------------------------
+* Database Design:
+    - Relational (SQL) recommended for structured data (Users, Posts, Likes).
+    - Proper Indexing: Indexing on `created_at` for feed performance and `user_id` for filtering.
+* High-Volume Handling (Millions of records):
+    - Implementation of Pagination (Offset or Cursor-based) for feed loading.
+    - Denormalization or Caching (e.g., Redis) for "Like" counts to reduce heavy JOIN operations.
+* Storage:
+    - Images should be stored in Object Storage (e.g., S3) with only the URL stored in the database.
+
+5. SECURITY & PERFORMANCE
+-------------------------
+* Security:
+    - Protection against SQL Injection (using ORM/Parameterized queries).
+    - XSS Prevention: Sanitize user-generated text and image metadata.
+    - CSRF Protection (if using session-based auth).
+* Performance:
+    - Lazy loading of images.
+    - Efficient query design to avoid N+1 problems during comment/reply fetching.
+
+6. DATA MODEL (CONCEPTUAL)
+--------------------------
+* Users: id, first_name, last_name, email, password_hash, created_at.
+* Posts: id, user_id, content_text, image_url, visibility (public/private), created_at.
+* Comments: id, post_id, user_id, parent_comment_id (null for top-level), content, created_at.
+* Likes: id, user_id, target_id (post/comment/reply), target_type, created_at.
+
+7. USER EXPERIENCE (UX) PRIORITIES
+----------------------------------
+* Immediate visual feedback when a user clicks "Like."
+* Clean, distraction-free feed layout.
+* Intuitive distinction between Public and Private post toggles.
+* Responsive design for both desktop and mobile access.

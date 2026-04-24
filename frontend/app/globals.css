@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+:root {
+  --page: #f0f4f8;
+  --surface: #ffffff;
+  --surface-muted: #f6f9fc;
+  --header: #ffffff;
+  --ink: #112032;
+  --muted: #66758a;
+  --subtle: #8c9aad;
+  --line: #d9e3ee;
+  --accent: #1890ff;
+  --accent-strong: #0f6edc;
+  --success: #0acf83;
+  --contrast: #ffffff;
+  --nav-shell: #112032;
+  --nav-ink: #ffffff;
+  --nav-ink-muted: rgb(255 255 255 / 0.7);
+  --danger: #d6405c;
+  --danger-strong: #b52f48;
+  --danger-surface: #fff1f3;
+  --danger-line: #ffc9d2;
+  --danger-ink: #b4233e;
+  --warning: #c57a15;
+  --warning-surface: #fff7e8;
+  --warning-line: #f6d39b;
+  --warning-ink: #8a5a12;
+  --event: #fb8c00;
+  --overlay: rgb(17 32 50 / 0.45);
+  --story-overlay-from: rgb(0 0 0 / 0.55);
+  --story-overlay-via: rgb(0 0 0 / 0.1);
+  --clear: transparent;
+  --avatar-teal-start: #0f766e;
+  --avatar-teal-end: #14b8a6;
+  --avatar-blue-start: #1d4ed8;
+  --avatar-blue-end: #60a5fa;
+  --avatar-amber-start: #b45309;
+  --avatar-amber-end: #f59e0b;
+  --avatar-rose-start: #be123c;
+  --avatar-rose-end: #fb7185;
+  --shadow-subtle: 0 16px 40px rgb(17 32 50 / 0.06);
+  --shadow-card: 0 18px 45px rgb(17 32 50 / 0.08);
+  --shadow-float: 0 10px 30px rgb(17 32 50 / 0.14);
+  --shadow-popover: 0 18px 45px rgb(17 32 50 / 0.14);
+  --shadow-panel: 0 24px 60px rgb(17 32 50 / 0.12);
+  --shadow-dialog: 0 24px 70px rgb(17 32 50 / 0.2);
+  --shadow-nav: 0 -12px 35px rgb(17 32 50 / 0.18);
+  --header-height: 80px;
+  --layout-offset: 1rem;
+}
+
+.dark {
+  --page: #09111d;
+  --surface: #0f1b2d;
+  --surface-muted: #162439;
+  --header: #101b2d;
+  --ink: #e8eef7;
+  --muted: #9fb0c5;
+  --subtle: #7f93aa;
+  --line: #27384f;
+  --accent: #4da3ff;
+  --accent-strong: #2c8df8;
+  --success: #21d48a;
+  --contrast: #f8fbff;
+  --nav-shell: #050b14;
+  --nav-ink: #f8fbff;
+  --nav-ink-muted: rgb(248 251 255 / 0.72);
+  --danger: #ff6f86;
+  --danger-strong: #ff5571;
+  --danger-surface: #3a1720;
+  --danger-line: #6b2a39;
+  --danger-ink: #ffb1bf;
+  --warning: #f0ae4f;
+  --warning-surface: #382913;
+  --warning-line: #72562b;
+  --warning-ink: #ffd79b;
+  --event: #ffad3d;
+  --overlay: rgb(5 11 20 / 0.62);
+  --story-overlay-from: rgb(5 11 20 / 0.72);
+  --story-overlay-via: rgb(5 11 20 / 0.22);
+  --clear: transparent;
+  --avatar-teal-start: #1a9b90;
+  --avatar-teal-end: #4de2cf;
+  --avatar-blue-start: #3b82f6;
+  --avatar-blue-end: #8bc6ff;
+  --avatar-amber-start: #d38a2d;
+  --avatar-amber-end: #ffca62;
+  --avatar-rose-start: #d84b6d;
+  --avatar-rose-end: #ff98ac;
+  --shadow-subtle: 0 16px 40px rgb(0 0 0 / 0.28);
+  --shadow-card: 0 18px 45px rgb(0 0 0 / 0.34);
+  --shadow-float: 0 10px 30px rgb(0 0 0 / 0.35);
+  --shadow-popover: 0 18px 45px rgb(0 0 0 / 0.38);
+  --shadow-panel: 0 24px 60px rgb(0 0 0 / 0.34);
+  --shadow-dialog: 0 24px 70px rgb(0 0 0 / 0.45);
+  --shadow-nav: 0 -12px 35px rgb(0 0 0 / 0.45);
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-header: var(--header);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-success: var(--success);
+  --color-contrast: var(--contrast);
+  --color-nav-shell: var(--nav-shell);
+  --color-nav-ink: var(--nav-ink);
+  --color-nav-ink-muted: var(--nav-ink-muted);
+  --color-danger: var(--danger);
+  --color-danger-strong: var(--danger-strong);
+  --color-danger-surface: var(--danger-surface);
+  --color-danger-line: var(--danger-line);
+  --color-danger-ink: var(--danger-ink);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-warning-line: var(--warning-line);
+  --color-warning-ink: var(--warning-ink);
+  --color-event: var(--event);
+  --color-overlay: var(--overlay);
+  --color-story-overlay-from: var(--story-overlay-from);
+  --color-story-overlay-via: var(--story-overlay-via);
+  --color-clear: var(--clear);
+  --color-avatar-teal-start: var(--avatar-teal-start);
+  --color-avatar-teal-end: var(--avatar-teal-end);
+  --color-avatar-blue-start: var(--avatar-blue-start);
+  --color-avatar-blue-end: var(--avatar-blue-end);
+  --color-avatar-amber-start: var(--avatar-amber-start);
+  --color-avatar-amber-end: var(--avatar-amber-end);
+  --color-avatar-rose-start: var(--avatar-rose-start);
+  --color-avatar-rose-end: var(--avatar-rose-end);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-poppins), var(--font-hind-siliguri), sans-serif;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.avatar-palette-teal {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--avatar-teal-start),
+    var(--avatar-teal-end)
+  );
+}
+
+.avatar-palette-blue {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--avatar-blue-start),
+    var(--avatar-blue-end)
+  );
+}
+
+.avatar-palette-amber {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--avatar-amber-start),
+    var(--avatar-amber-end)
+  );
+}
+
+.avatar-palette-rose {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--avatar-rose-start),
+    var(--avatar-rose-end)
+  );
+}
+
+
+
+
+/* scrollbar styles - using raw CSS to avoid Tailwind ::selection pseudo-element conflicts with Turbopack */
+::-webkit-scrollbar {
+    width: 0.3rem;
+    height: 0px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    display: none;
+    min-height: 2.75rem;
+    border-radius: 9999px;
+    background-color: #40a9ff33;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #1890ffe6;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+    display: block;
+}
+
+body::-webkit-scrollbar {
+    width: 0.45rem;
+}
+
+body::-webkit-scrollbar-thumb {
+    position: static;
+    display: block;
+    min-height: 2.75rem;
+    border-radius: 9999px;
+    background-color: #40a9ff;
+}
+
+@-moz-document url-prefix() {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: #40a9ff transparent;
+    }
+}

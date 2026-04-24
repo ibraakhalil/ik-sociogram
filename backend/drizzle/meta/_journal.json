@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1775049804470,
+      "tag": "0000_redundant_marvex",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1775049997096,
+      "tag": "0001_spotty_living_mummy",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1775137881180,
+      "tag": "0002_sloppy_fallen_one",
+      "breakpoints": true
+    }
+  ]
+}

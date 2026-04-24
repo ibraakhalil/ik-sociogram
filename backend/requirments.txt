@@ -1,0 +1,75 @@
+BACKEND SPECIFICATION: SOCIAL FEED API
+=======================================
+
+1. TECH STACK & ENVIRONMENT
+---------------------------
+- Runtime: Bun
+- Framework: Hono.js
+- ORM: Drizzle ORM
+- Database: SQLite (via bun:sqlite)
+- Authentication: JWT (JSON Web Tokens)
+- Password Hashing: Argon2 or BCrypt (using Bun.password)
+
+2. CORE DATA MODELS (Drizzle Schema)
+------------------------------------
+- Users:
+    - id (UUID/Primary Key)
+    - firstName, lastName, email (unique), password (hashed), createdAt
+- Posts:
+    - id, authorId (FK), contentText, imageUrl, visibility ('public' | 'private'), createdAt
+- Comments:
+    - id, postId (FK), authorId (FK), parentId (FK, nullable for nested replies), content, createdAt
+- Likes:
+    - id, userId (FK), targetId (Post or Comment ID), targetType ('post' | 'comment'), createdAt
+
+3. AUTHENTICATION SYSTEM
+------------------------
+- Strategy: JWT-based.
+- Workflow:
+    1. Register: Create user, hash password, return success.
+    2. Login: Validate credentials, issue JWT.
+    3. Middleware: A Hono middleware to verify JWT in 'Authorization: Bearer <token>' header.
+    4. Payload: JWT must contain userId and email.
+
+4. FEED LOGIC & API ENDPOINTS
+-----------------------------
+- Feed Query Logic:
+    - Must filter: (visibility = 'public' OR authorId = currentUserId).
+    - Sort: createdAt DESC.
+    - Performance: Use Cursor-based or Offset-based pagination for high-volume handling.
+- Interaction Logic:
+    - Like/Unlike: Atomic toggle. Check if a record exists in the 'Likes' table; delete if present, insert if not.
+    - Nested Comments: Implement a recursive structure or a flat list that the frontend can treeify.
+
+5. API ENDPOINT REQUIREMENTS
+----------------------------
+- POST /auth/register : Create user.
+- POST /auth/login : Return JWT.
+- GET /posts : Fetch feed (Filtered by visibility and sorted).
+- POST /posts : Create post (Text + Image URL).
+- GET /posts/:id/likes : Return list of users who liked the post.
+- POST /posts/:id/like : Toggle like.
+- GET /posts/:id/comments : Fetch comments and replies.
+- POST /posts/:id/comments : Add comment or reply (using parentId).
+- POST /comments/:id/like : Toggle like on a comment/reply.
+
+6. TECHNICAL CONSTRAINTS & SECURITY
+-----------------------------------
+- Millions of Records:
+    - Apply database indexes on `posts.createdAt`, `posts.authorId`, and `likes.targetId`.
+    - Avoid `SELECT *`; only fetch required fields.
+- Security:
+    - Input Validation: Use Zod (standard with Hono) to validate request bodies.
+    - SQL Injection: Use Drizzle’s prepared statements/parameterized queries.
+    - Authorization: Ensure users cannot delete/edit posts they do not own.
+
+7. IMPLEMENTATION STEPS FOR AGENT
+---------------------------------
+1. Initialize Bun project and install dependencies (hono, drizzle-orm, drizzle-kit, @hono/jwt).
+2. Setup SQLite database connection using Drizzle.
+3. Define the relational schema with foreign key constraints.
+4. Implement JWT Middleware.
+5. Build the Auth controller (Sign up / Login).
+6. Build the Feed controller with the visibility/privacy SQL logic.
+7. Build the recursive Comment/Reply system.
+8. Implement the Liker List functionality.
